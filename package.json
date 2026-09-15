@@ -11,7 +11,8 @@
 		"lint": "biome lint .",
 		"format": "biome format . --write",
 		"check": "biome check . --write",
-		"test": "vitest run"
+		"compile:i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+		"test": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && vitest run"
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.4",
