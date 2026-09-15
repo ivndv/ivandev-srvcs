@@ -1,38 +1,30 @@
-// Hono
-import { Hono } from "hono";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { handle } from "hono/cloudflare-pages";
-// Tipos
-import type { Env } from "../_lib/types/env";
-// Servicios
-import { ContactService } from "../_lib";
-// Middleware
-import { corsMiddleware } from "../_lib/middleware/cors";
+import {
+	contactRoute,
+	registerContactController,
+} from "../_controllers/contactController";
+import { registerDocsController } from "../_controllers/docsController";
+import {
+	healthRoute,
+	registerHealthController,
+} from "../_controllers/healthController";
+import { registerErrors } from "../_middleware/errors";
+import type { Env } from "../_shared/types";
 
-const app = new Hono<{ Bindings: Env }>().basePath("/api");
+// Instancia OpenAPIHono tipada con las variables de entorno de Cloudflare
+export const app = new OpenAPIHono<{ Bindings: Env }>();
 
-// CORS global para dominios permitidos
-app.use("/*", corsMiddleware);
+// Controladores
+registerHealthController(app);
+registerContactController(app);
+registerDocsController(app);
 
-// POST /api/send-email — Envía formulario de contacto
-app.post("/send-email", async (c) => {
-	try {
-		// 1. Parsea el cuerpo de la petición
-		const body = await c.req.json();
-		const ip = c.req.header("CF-Connecting-IP");
-		// 2. Construye el servicio con sus dependencias y procesa la solicitud
-		const { status, body: responseBody } = await ContactService.create(c.env).handleRequest(body, ip);
-		// 3. Devuelve la respuesta
-		return c.json(responseBody, status);
-	} catch (error) {
-		console.error("[CONTACTO] Error interno:", error);
-		return c.json({ success: false, error: "Error interno del servidor" }, 500);
-	}
-});
+// Middleware global de manejo de errores (404 y 500)
+registerErrors(app);
 
-// GET /api/health — Health check
-app.get("/health", (c) => {
-	return c.json({ status: "ok", marca_tiempo: new Date().toISOString() });
-});
+// Re-exportación de rutas para clientes tipados RPC si se requieren
+export { contactRoute, healthRoute };
 
-// Manejador para Cloudflare Pages
+// Handler para Cloudflare Pages Functions
 export const onRequest = handle(app);
