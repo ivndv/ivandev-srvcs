@@ -1,0 +1,35 @@
+---
+interface Props {
+	delay?: number;
+	direction?: "up" | "down" | "left" | "right" | "none";
+	duration?: number;
+	class?: string;
+}
+
+const {
+	delay = 0,
+	direction = "up",
+	duration = 0.3,
+	class: className = "",
+} = Astro.props;
+
+const directionMap = {
+	up: "animate-fade-in-up",
+	down: "animate-fade-in-down",
+	left: "animate-fade-in-left",
+	right: "animate-fade-in-right",
+	none: "",
+};
+
+const animationClass = direction !== "none" ? directionMap[direction] : "";
+const delayStyle = delay > 0 ? `animation-delay: ${delay}ms;` : "";
+const durationStyle =
+	duration !== 0.3 ? `animation-duration: ${duration}s;` : "";
+---
+
+<div 
+	class={`${animationClass} ${className}`.trim()} 
+	style={`${delayStyle} ${durationStyle}`.trim() || undefined}
+>
+	<slot />
+</div>
