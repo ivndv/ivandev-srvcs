@@ -7,10 +7,17 @@ import Projects from "../../components/Projects.astro";
 import Services from "../../components/Services.astro";
 import Testimonios from "../../components/Testimonios.astro";
 import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+	return [{ params: { locale: undefined } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params;
+const lang = (locale === "en" ? "en" : "es") as "es" | "en";
 ---
 
-{/* Página de inicio (en) */}
-<Layout title="Ivan Cruz | Frontend Developer & Hosting" lang="en">
+{/* Landing principal unificada i18n */}
+<Layout title="Ivan Cruz | Frontend Developer & Hosting" lang={lang}>
 	<Hero />
 	<Services />
 	<Projects />
@@ -18,10 +25,3 @@ import Layout from "../../layouts/Layout.astro";
 	<About />
 	<Contact />
 </Layout>
-
-<script>
-  // Store
-  import { preferencesStore } from "../../store/preferences";
-  // Guarda preferencia de inglés al cargar
-  preferencesStore.getState().setLang('en');
-</script>
