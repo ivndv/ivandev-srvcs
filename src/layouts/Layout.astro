@@ -2,15 +2,15 @@
 // Estilos
 import "../styles/global.css";
 // Fuentes
-import '@fontsource/outfit';
-// i18n
-import { useTranslations } from "../i18n/utils";
-// Transiciones
-import { ClientRouter } from "astro:transitions";
+import "@fontsource/outfit";
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
+import Footer from "../components/Footer.astro";
+import LanguagePicker from "../components/LanguagePicker.astro";
 // Componentes
 import ThemeToggle from "../components/ThemeToggle.astro";
-import LanguagePicker from "../components/LanguagePicker.astro";
-import Footer from "../components/Footer.astro";
+// Config
+import { ASSETS_BASE } from "../config/assets";
 
 // Props del layout
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { title, lang = "es" } = Astro.props;
-const t = useTranslations(lang);
+const opt = { locale: lang };
 ---
 
 <!doctype html>
@@ -27,27 +27,26 @@ const t = useTranslations(lang);
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content={t('meta.description')} />
+		<meta name="description" content={m.meta_description({}, opt)} />
 
 		<!-- Favicon -->
-		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="icon" type="image/png" href={`${ASSETS_BASE}/favicon.png`} />
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
-		<meta property="og:description" content={t('meta.description')} />
-		<meta property="og:image" content={new URL('/og-main.png', Astro.url)} />
+		<meta property="og:description" content={m.meta_description({}, opt)} />
+		<meta property="og:image" content={`${ASSETS_BASE}/og-main.png`} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={Astro.url} />
 		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={t('meta.description')} />
-		<meta property="twitter:image" content={new URL('/og-main.png', Astro.url)} />
+		<meta property="twitter:description" content={m.meta_description({}, opt)} />
+		<meta property="twitter:image" content={`${ASSETS_BASE}/og-main.png`} />
 
 		<title>{title}</title>
-		<ClientRouter />
 
 		<!-- Script de persistencia de tema (evita flash al cargar) -->
 		<script is:inline>
@@ -63,35 +62,19 @@ const t = useTranslations(lang);
 					if (theme === 'business') document.documentElement.classList.add('dark');
 				} catch(e) {}
 			})();
-
-			// 4. Reaplica el tema después de navegación con Astro
-			document.addEventListener("astro:after-swap", function() {
-				try {
-					var saved = JSON.parse(localStorage.getItem("preferences") || "{}");
-					var theme = (saved && saved.state && saved.state.theme) ||
-						(window.matchMedia("(prefers-color-scheme: dark)").matches ? "business" : "nord");
-					document.documentElement.setAttribute("data-theme", theme);
-					if (theme === 'business') document.documentElement.classList.add('dark');
-					else document.documentElement.classList.remove('dark');
-				} catch(e) {}
-			});
 		</script>
 
-		<!-- Analítica Umami -->
-		<script defer src="https://umami.fluxdv.icu/stats" data-website-id="e0be3719-9858-4b8a-8fbc-31b5d3e585dc"></script>
-
-		<!-- Datos estructurados JSON-LD -->
-		<script type="application/ld+json" is:inline set:html={JSON.stringify({
+		<!-- Datos estructurados JSON-LD para SEO -->
+		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "Person",
 			"name": "Ivan Cruz",
 			"url": "https://web-portfolio.mgdc.site",
-			"image": "https://web-portfolio.mgdc.site/favicon.png",
+			"jobTitle": "Desarrollador Web Frontend & Cloud Hosting",
 			"sameAs": [
-				"https://github.com/Ivandv19"
+				"https://github.com/Ivandv19",
+				"https://linkedin.com/in/ivancruzdev"
 			],
-			"jobTitle": t('footer.role'),
-			"description": t('meta.description'),
 			"knowsAbout": [
 				"Frontend Development",
 				"React",
@@ -101,22 +84,22 @@ const t = useTranslations(lang);
 			],
 			"hasOfferCatalog": {
 				"@type": "OfferCatalog",
-				"name": t('services.title'),
+				"name": m.services_title({}, opt),
 				"itemListElement": [
 					{
 						"@type": "Offer",
 						"itemOffered": {
 							"@type": "Service",
-							"name": t('services.landing.title'),
-							"description": t('services.landing.desc')
+							"name": m.services_landing_title({}, opt),
+							"description": m.services_landing_desc({}, opt)
 						}
 					},
 					{
 						"@type": "Offer",
 						"itemOffered": {
 							"@type": "Service",
-							"name": t('services.infra.title'),
-							"description": t('services.infra.desc')
+							"name": m.services_infra_title({}, opt),
+							"description": m.services_infra_desc({}, opt)
 						}
 					}
 				]
@@ -130,24 +113,24 @@ const t = useTranslations(lang);
 		<header class="navbar bg-base-100/80 text-base-content backdrop-blur-md border-b border-base-content/10 sticky top-0 z-50 px-4 lg:px-8 xl:px-20">
 			<div class="navbar-start">
 				<a href="#hero" class="text-xl font-bold tracking-tighter">
-					{t('nav.logo.text')}<span class="text-primary">{t('nav.logo.highlight')}</span>
+					{m.nav_logo_text({}, opt)}<span class="text-primary">{m.nav_logo_highlight({}, opt)}</span>
 				</a>
 			</div>
 
 			<div class="navbar-center hidden xl:flex">
 				<ul class="menu menu-horizontal px-1 font-medium gap-2 flex-nowrap">
-					<li><a href="#hero" class="hover:text-primary transition-colors">{t('nav.home')}</a></li>
-					<li><a href="#servicios" class="hover:text-primary transition-colors">{t('nav.services')}</a></li>
-					<li><a href="#proyectos" class="hover:text-primary transition-colors">{t('nav.projects')}</a></li>
-					<li><a href="#testimonios" class="hover:text-primary transition-colors">{t('nav.testimonials')}</a></li>
-					<li><a href="#sobre-mi" class="hover:text-primary transition-colors">{t('nav.about')}</a></li>
+					<li><a href="#hero" class="hover:text-primary transition-colors">{m.nav_home({}, opt)}</a></li>
+					<li><a href="#servicios" class="hover:text-primary transition-colors">{m.nav_services({}, opt)}</a></li>
+					<li><a href="#proyectos" class="hover:text-primary transition-colors">{m.nav_projects({}, opt)}</a></li>
+					<li><a href="#testimonios" class="hover:text-primary transition-colors">{m.nav_testimonials({}, opt)}</a></li>
+					<li><a href="#sobre-mi" class="hover:text-primary transition-colors">{m.nav_about({}, opt)}</a></li>
 				</ul>
 			</div>
 
 			<div class="navbar-end">
 				<div class="hidden xl:flex items-center gap-2">
 					<a href="#contacto" class="btn btn-primary btn-sm text-white border-none px-6">
-						{t('nav.contact')}
+						{m.nav_contact({}, opt)}
 					</a>
 					<ThemeToggle class="ml-2" />
 					<LanguagePicker />
@@ -161,11 +144,11 @@ const t = useTranslations(lang);
 						</svg>
 					</label>
 					<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-200 rounded-box w-52 font-medium">
-						<li><a href="#hero">{t('nav.home')}</a></li>
-						<li><a href="#servicios">{t('nav.services')}</a></li>
-						<li><a href="#proyectos">{t('nav.projects')}</a></li>
-						<li><a href="#testimonios">{t('nav.testimonials')}</a></li>
-						<li><a href="#sobre-mi">{t('nav.about')}</a></li>
+						<li><a href="#hero">{m.nav_home({}, opt)}</a></li>
+						<li><a href="#servicios">{m.nav_services({}, opt)}</a></li>
+						<li><a href="#proyectos">{m.nav_projects({}, opt)}</a></li>
+						<li><a href="#testimonios">{m.nav_testimonials({}, opt)}</a></li>
+						<li><a href="#sobre-mi">{m.nav_about({}, opt)}</a></li>
 						<div class="divider my-1 opacity-5"></div>
 						<li class="p-2">
 							<div class="flex items-center justify-between w-full">
@@ -174,7 +157,7 @@ const t = useTranslations(lang);
 							</div>
 						</li>
 						<li class="p-2 flex flex-row gap-2 items-center">
-							<a href="#contacto" class="btn btn-primary btn-sm text-white grow h-10 min-h-0">{t('nav.contact')}</a>
+							<a href="#contacto" class="btn btn-primary btn-sm text-white grow h-10 min-h-0">{m.nav_contact({}, opt)}</a>
 							<ThemeToggle class="bg-base-300/50" />
 						</li>
 					</ul>
@@ -182,34 +165,40 @@ const t = useTranslations(lang);
 			</div>
 		</header>
 
-		{/* Contenido principal */}
-		<main class="grow" transition:animate="fade">
+		{/* Contenido principal con espacio para footer pegajoso */}
+		<main class="grow">
 			<slot />
 		</main>
 
-		<Footer />
+		<Footer lang={lang} />
 
 		{/* Observer de animaciones al hacer scroll (reveal on scroll) */}
 		<script>
-			const observerOptions = {
-				root: null,
-				rootMargin: '0px',
-				threshold: 0.1
-			};
+			function initAnimateOnScroll() {
+				const observerOptions = {
+					root: null,
+					rootMargin: '0px',
+					threshold: 0.1
+				};
 
-			const observer = new IntersectionObserver((entries, observer) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('is-visible');
-						observer.unobserve(entry.target);
-					}
-				});
-			}, observerOptions);
+				const observer = new IntersectionObserver((entries, obs) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-visible');
+							obs.unobserve(entry.target);
+						}
+					});
+				}, observerOptions);
 
-			document.addEventListener('astro:page-load', () => {
 				const hiddenElements = document.querySelectorAll('.animate-on-scroll');
 				hiddenElements.forEach((el) => observer.observe(el));
-			});
+			}
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initAnimateOnScroll);
+			} else {
+				initAnimateOnScroll();
+			}
 		</script>
 	</body>
 </html>

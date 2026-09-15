@@ -1,32 +1,32 @@
 ---
-// Utilerías
-import { getCloudflareImage } from "../utils/images";
-// i18n
-import { useTranslations } from '../i18n/utils';
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
+// Config
+import { ASSETS_BASE } from "../config/assets";
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 
 // Datos de testimonios de clientes
 const testimonios = [
 	{
 		nombre: "Oscar Mendoza",
 		puesto: 'Dueño, Cantina "La 15"',
-		img: "https://portafolio-web-front.mgdc.site/oscar.jpg",
+		img: `${ASSETS_BASE}/oscar.jpg`,
 		texto:
 			"Ivan nos ayudó con el menú digital y el sitio web del bar. Ahora es mucho más fácil para nuestros clientes reservar.",
 	},
 	{
 		nombre: "Claudia Ortiz",
 		puesto: "Co-fundadora, Envíos Express Local",
-		img: "https://portafolio-web-front.mgdc.site/claudia.jpg",
+		img: `${ASSETS_BASE}/claudia.jpg`,
 		texto:
 			"Como startup pequeña ocupábamos una landing que explicara rápido nuestro servicio. Ivan entendió la idea a la primera.",
 	},
 	{
 		nombre: "Javier Solís",
 		puesto: "Propietario, Refaccionaria El Güero",
-		img: "https://portafolio-web-front.mgdc.site/javier.jpg",
+		img: `${ASSETS_BASE}/javier.jpg`,
 		texto:
 			"Buscaba digitalizar el catálogo de la refaccionaria e Ivan hizo un excelente trabajo. Es una persona confiable.",
 	},
@@ -36,15 +36,14 @@ const testimonios = [
 {/* Sección Testimonios — reseñas de clientes */}
 <section id="testimonios" class="py-24 px-4 lg:px-20 bg-base-100">
   <div class="text-center mb-16 animate-on-scroll">
-    <h2 class="text-4xl font-bold mb-4 text-base-content">{t('testimonials.title')}</h2>
+    <h2 class="text-4xl font-bold mb-4 text-base-content">{m.testimonials_title({}, opt)}</h2>
     <p class="text-lg text-base-content/70">
-      {t('testimonials.desc')}
+      {m.testimonials_desc({}, opt)}
     </p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-on-scroll">
     {testimonios.map((item) => (
-      <!-- Testimonio individual -->
       <div class="card bg-base-200 p-8 shadow-sm border border-base-content/5 relative">
         <span class="text-6xl text-primary/20 absolute top-4 right-8 font-serif">"</span>
         
@@ -53,12 +52,7 @@ const testimonios = [
             <div class="w-12 rounded-full overflow-hidden ring ring-primary ring-offset-base-100 ring-offset-1">
               
               <img 
-                src={getCloudflareImage(item.img, 100)} 
-                srcset={`
-                  ${getCloudflareImage(item.img, 50)} 1x,
-                  ${getCloudflareImage(item.img, 100)} 2x
-                `}
-                sizes="48px"
+                src={item.img} 
                 alt={item.nombre} 
                 width="48" 
                 height="48"
@@ -74,17 +68,10 @@ const testimonios = [
             <p class="text-xs opacity-60">{item.puesto}</p>
           </div>
         </div>
-        
-        <p class="text-sm italic opacity-80 leading-relaxed">
+
+        <p class="text-sm opacity-80 leading-relaxed italic">
           "{item.texto}"
         </p>
-        
-        {/* Calificación de 5 estrellas */}
-        <div class="rating rating-xs mt-4">
-          {[1,2,3,4,5].map(() => (
-            <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
-          ))}
-        </div>
       </div>
     ))}
   </div>

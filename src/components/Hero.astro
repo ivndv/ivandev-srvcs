@@ -1,13 +1,11 @@
 ---
-// Utilerías
-import { getCloudflareImage } from '../utils/images.js';
-// i18n
-import { useTranslations } from '../i18n/utils';
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 
-const githubAvatar = 'https://avatars.githubusercontent.com/u/157653669';
+const githubAvatar = "https://avatars.githubusercontent.com/u/157653669";
 ---
 
 {/* Sección Hero — presentación principal */}
@@ -24,12 +22,7 @@ const githubAvatar = 'https://avatars.githubusercontent.com/u/157653669';
           class="w-48 md:w-64 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
         >
           <img
-            src={getCloudflareImage(githubAvatar, 400)}
-            srcset={`
-        ${getCloudflareImage(githubAvatar, 200)} 200w,
-        ${getCloudflareImage(githubAvatar, 400)} 400w
-      `}
-            sizes="(max-width: 768px) 200px, 400px"
+            src={githubAvatar}
             alt="Ivan Cruz"
             width="400"
             height="400"
@@ -43,15 +36,15 @@ const githubAvatar = 'https://avatars.githubusercontent.com/u/157653669';
 
     <div class="text-center lg:text-left max-w-2xl animate-on-scroll text-base-content">
       <h1 class="text-5xl md:text-6xl font-black mb-4 leading-tight">
-        {t('hero.greeting')} <span class="text-primary">Ivan Cruz</span> {t('hero.role')}
+        {m.hero_greeting({}, opt)} <span class="text-primary">Ivan Cruz</span> {m.hero_role({}, opt)}
       </h1>
 
       <p class="py-6 text-lg opacity-90 leading-relaxed text-base-content">
-        <span set:html={t('hero.description')} />
+        <span set:html={m.hero_description({}, opt)} />
       </p>
 
       <div class="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
-        <a href="#proyectos" class="btn btn-primary">{t('hero.cta')}</a>
+        <a href="#proyectos" class="btn btn-primary">{m.hero_cta({}, opt)}</a>
       </div>
 
       {/* Redes sociales */}
@@ -62,47 +55,26 @@ const githubAvatar = 'https://avatars.githubusercontent.com/u/157653669';
           href="https://github.com/Ivandv19"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1 text-base-content hover:text-primary transition-colors"
+          class="flex items-center gap-2 hover:text-primary transition-colors py-1"
         >
-          <span class="icon-[mdi--github] text-[18px]"></span> Github <span class="font-medium"></span>{' '}
-          <span class="icon-[lucide--arrow-up-right] text-[16px]"></span>
+          <span class="iconify w-5 h-5 i-lucide-github" aria-hidden="true"></span>
+          <span>GitHub</span>
         </a>
         <a
-          href="https://www.linkedin.com/in/ivan-cruz-1906mx"
+          href="https://linkedin.com/in/ivancruzdev"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1 text-base-content hover:text-primary transition-colors"
+          class="flex items-center gap-2 hover:text-primary transition-colors py-1"
         >
-          <span class="icon-[mdi--linkedin] text-[18px]"></span> Linkedin <span class="font-medium"></span>{' '}
-          <span class="icon-[lucide--arrow-up-right] text-[16px]"></span>
+          <span class="iconify w-5 h-5 i-lucide-linkedin" aria-hidden="true"></span>
+          <span>LinkedIn</span>
         </a>
-
         <a
-          href="https://discord.com/users/ivandv19"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-1 text-base-content hover:text-primary transition-colors"
+          href="mailto:ivangtx19@gmail.com"
+          class="flex items-center gap-2 hover:text-primary transition-colors py-1"
         >
-          <span class="icon-[line-md--discord]"></span> Discord <span class="icon-[lucide--arrow-up-right] text-[16px]"></span>
-        </a>
-
-        <a
-          href="https://app.aluracursos.com/user/ivanmx19"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-1 text-base-content hover:text-primary transition-colors"
-        >
-          <span class="font-bold text-lg">a</span>{' '}
-          <span class="font-medium"></span> Alura <span class="icon-[lucide--arrow-up-right] text-[16px]"></span>
-        </a>
-
-        <a
-          href="https://codigofacilito.com/usuarios/Ivandv19"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-1 text-base-content hover:text-primary transition-colors"
-        >
-          <span class="icon-[lucide--graduation-cap] text-[18px]"></span> Codigo facilito <span class="icon-[lucide--arrow-up-right] text-[16px]"></span>
+          <span class="iconify w-5 h-5 i-lucide-mail" aria-hidden="true"></span>
+          <span>ivangtx19@gmail.com</span>
         </a>
       </div>
     </div>

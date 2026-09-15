@@ -1,6 +1,3 @@
-// Claves de traducción del i18n
-export type TranslationKey = keyof typeof import("../i18n/ui").ui.es;
-
 // Proyecto del portafolio
 export interface Project {
 	titulo: string;
@@ -22,13 +19,4 @@ export interface ContactFormData {
 	mensaje: string;
 	fax_number?: string;
 	"cf-turnstile-response"?: string;
-}
-
-// Opciones de transformación de imágenes con Cloudflare
-export interface CloudflareImageOptions {
-	width?: number;
-	height?: number;
-	quality?: number;
-	format?: "auto" | "webp" | "avif" | "jpeg" | "png";
-	fit?: "scale-down" | "cover" | "contain" | "crop";
 }

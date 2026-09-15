@@ -1,10 +1,9 @@
 ---
-// i18n
-import { useTranslations } from "../i18n/utils";
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
-const year = new Date().getFullYear();
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 ---
 
 <footer class="bg-neutral text-neutral-content pt-20 pb-10 px-4 lg:px-8 xl:px-20 rounded-t-[3rem] mt-20">
@@ -13,10 +12,10 @@ const year = new Date().getFullYear();
     <!-- Columna 1: Marca y Redes -->
     <div class="space-y-6">
       <h2 class="text-2xl md:text-3xl font-black tracking-tighter uppercase leading-tight">
-        {t('nav.logo.text')} <span class="text-primary">{t('nav.logo.highlight')}</span>
+        {m.nav_logo_text({}, opt)} <span class="text-primary">{m.nav_logo_highlight({}, opt)}</span>
       </h2>
       <p class="text-sm opacity-70 leading-relaxed max-w-xs">
-        {t('footer.description')}
+        {m.footer_description({}, opt)}
       </p>
       <div class="flex gap-4">
         <a href="https://github.com/Ivandv19" target="_blank" class="hover:text-primary transition-colors" aria-label="GitHub">
@@ -36,35 +35,35 @@ const year = new Date().getFullYear();
 
     <!-- Columna 2: Navegación -->
     <div class="space-y-6">
-      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{t('footer.nav.title')}</h3>
+      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{m.footer_nav_title({}, opt)}</h3>
       <nav class="flex flex-col gap-3">
-        <a href="#servicios" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('nav.services')}</a>
-        <a href="#proyectos" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('nav.projects')}</a>
-        <a href="#testimonios" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('nav.testimonials')}</a>
-        <a href="#contacto" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('nav.contact')}</a>
+        <a href="#servicios" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.nav_services({}, opt)}</a>
+        <a href="#proyectos" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.nav_projects({}, opt)}</a>
+        <a href="#testimonios" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.nav_testimonials({}, opt)}</a>
+        <a href="#contacto" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.nav_contact({}, opt)}</a>
       </nav>
     </div>
 
     <!-- Columna 3: Legal -->
     <div class="space-y-6">
-      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{t('footer.legal.title')}</h3>
+      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{m.footer_legal_title({}, opt)}</h3>
       <nav class="flex flex-col gap-3">
-        <a href="#" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('footer.legal.terms')}</a>
-        <a href="#" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{t('footer.legal.privacy')}</a>
+        <a href="#" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.footer_legal_terms({}, opt)}</a>
+        <a href="#" class="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">{m.footer_legal_privacy({}, opt)}</a>
       </nav>
     </div>
 
     <!-- Columna 4: Newsletter -->
     <div class="space-y-6">
-      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{t('footer.newsletter.title')}</h3>
+      <h3 class="text-xs font-black tracking-widest uppercase opacity-90">{m.footer_newsletter_title({}, opt)}</h3>
       <form class="space-y-3" onsubmit="event.preventDefault()">
         <input 
           type="email" 
-          placeholder={t('footer.newsletter.placeholder')}
+          placeholder={m.footer_newsletter_placeholder({}, opt)}
           class="w-full px-4 py-3 rounded-lg bg-neutral-focus border border-white/10 focus:border-primary outline-none transition-all text-sm"
         />
         <button class="w-full py-3 bg-primary hover:bg-primary/90 text-primary-content font-black rounded-lg transition-all text-sm uppercase tracking-wide shadow-lg active:scale-95">
-          {t('footer.newsletter.btn')}
+          {m.footer_newsletter_btn({}, opt)}
         </button>
       </form>
     </div>
@@ -76,7 +75,7 @@ const year = new Date().getFullYear();
     
     <div class="space-y-2">
       <p class="text-xs font-bold opacity-60 uppercase tracking-widest">
-        {t('footer.developed')} <span class="text-neutral-content">Sinx</span>
+        {m.footer_developed({}, opt)} <span class="text-neutral-content">Sinx</span>
       </p>
       
       {/* Badges del stack tecnológico */}
@@ -89,7 +88,7 @@ const year = new Date().getFullYear();
     </div>
 
     <p class="text-[10px] opacity-40 uppercase tracking-widest leading-loose">
-      {t('footer.rights')}
+      {m.footer_rights({}, opt)}
     </p>
     
   </div>

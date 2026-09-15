@@ -1,14 +1,19 @@
 ---
-// i18n
-import { languages } from "../i18n/ui";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-const currentLang = Astro.currentLocale || 'es';
+const languages = {
+	es: "Español",
+	en: "English",
+};
+
+const currentLang = Astro.currentLocale || "es";
 // Limpia la ruta actual para construir URLs relativas por idioma
-const currentPath = Astro.url.pathname.replace(/^\/(en|es)\//, '/').replace(/^\//, '');
+const currentPath = Astro.url.pathname
+	.replace(/^\/(en|es)\//, "/")
+	.replace(/^\//, "");
 
 function getLangPath(targetLang: string) {
-    return getRelativeLocaleUrl(targetLang, currentPath);
+	return getRelativeLocaleUrl(targetLang, currentPath);
 }
 ---
 {/* Selector de idioma (es/en) con menú desplegable */}
@@ -50,7 +55,7 @@ function getLangPath(targetLang: string) {
 </div>
 
 <script>
-  import { preferencesStore } from "../store/preferences";
+  import { preferencesStore } from "../store/store";
 
   // Inicializa el comportamiento del dropdown de idioma
   const setupPickers = () => {
@@ -114,5 +119,4 @@ function getLangPath(targetLang: string) {
   };
 
   setupPickers();
-  document.addEventListener('astro:page-load', setupPickers);
 </script>

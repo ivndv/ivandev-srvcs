@@ -1,9 +1,9 @@
 ---
-// i18n
-import { useTranslations } from '../i18n/utils';
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 ---
 
 {/* Sección Contacto — formulario e información de contacto */}
@@ -13,10 +13,10 @@ const t = useTranslations(currentLang);
       {/* Información de contacto */}
       <div class="lg:sticky lg:top-32">
         <h2 class="text-5xl font-black mb-6 text-base-content">
-          <span set:html={t('contact.title')} />
+          <span set:html={m.contact_title({}, opt)} />
         </h2>
         <p class="text-lg text-base-content/70 mb-8">
-          {t('contact.desc')}
+          {m.contact_desc({}, opt)}
         </p>
 
         <div class="lg:col-span-1 space-y-4">
@@ -45,7 +45,7 @@ const t = useTranslations(currentLang);
                 <h4
                   class="font-bold text-sm uppercase tracking-widest text-base-content/60"
                 >
-                  {t('contact.email')}
+                  {m.contact_email({}, opt)}
                 </h4>
                 <p class="text-sm font-semibold text-base-content">ivangtx19@gmail.com</p>
               </div>
@@ -53,7 +53,7 @@ const t = useTranslations(currentLang);
             <button
               onclick="navigator.clipboard.writeText('ivangtx19@gmail.com')"
               class="btn btn-ghost btn-xs absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
-              title="Copiar correo">{t('contact.copy')}</button
+              title="Copiar correo">{m.contact_copy({}, opt)}</button
             >
           </div>
 
@@ -84,7 +84,7 @@ const t = useTranslations(currentLang);
                 <h4
                   class="font-bold text-sm uppercase tracking-widest text-base-content/60"
                 >
-                  {t('contact.whatsapp')}
+                  {m.contact_whatsapp({}, opt)}
                 </h4>
                 <p class="text-sm font-semibold text-base-content">+52 56 6772 3938</p>
               </div>
@@ -92,7 +92,7 @@ const t = useTranslations(currentLang);
             <button
               onclick="navigator.clipboard.writeText('525667723938')"
               class="btn btn-ghost btn-xs absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
-              title="Copiar número">{t('contact.copy')}</button
+              title="Copiar número">{m.contact_copy({}, opt)}</button
             >
           </div>
 
@@ -122,7 +122,7 @@ const t = useTranslations(currentLang);
                 <h4
                   class="font-bold text-sm uppercase tracking-widest text-base-content/60"
                 >
-                  {t('contact.location')}
+                  {m.contact_location({}, opt)}
                 </h4>
                 <p class="text-sm font-semibold text-base-content">México</p>
               </div>
@@ -136,9 +136,9 @@ const t = useTranslations(currentLang);
         <form 
           id="contactForm" 
           class="card-body p-8 flex flex-col gap-y-5"
-          data-msg-sending={t('contact.form.sending')}
-          data-msg-success={t('contact.form.success')}
-          data-msg-error={t('contact.form.error')}
+          data-msg-sending={m.contact_form_sending({}, opt)}
+          data-msg-success={m.contact_form_success({}, opt)}
+          data-msg-error={m.contact_form_error({}, opt)}
         >
           
           {/* Honeypot invisible anti-bots */}
@@ -152,7 +152,7 @@ const t = useTranslations(currentLang);
 
           <div class="form-control w-full">
             <label for="nombre" class="label pb-1">
-              <span class="label-text font-semibold">{t('contact.form.name')}</span>
+              <span class="label-text font-semibold">{m.contact_form_name({}, opt)}</span>
             </label>
             <input
               id="nombre"
@@ -166,7 +166,7 @@ const t = useTranslations(currentLang);
 
           <div class="form-control w-full">
             <label for="email" class="label pb-1">
-              <span class="label-text font-semibold">{t('contact.form.email')}</span>
+              <span class="label-text font-semibold">{m.contact_form_email({}, opt)}</span>
             </label>
             <input
               id="email"
@@ -181,7 +181,7 @@ const t = useTranslations(currentLang);
           <div class="form-control w-full">
             <label for="servicio" class="label pb-1">
               <span class="label-text font-semibold"
-                >{t('contact.form.service')}</span
+                >{m.contact_form_service({}, opt)}</span
               >
             </label>
             <select
@@ -189,22 +189,22 @@ const t = useTranslations(currentLang);
               name="servicio"
               class="select select-bordered w-full focus:select-primary transition-all"
             >
-              <option disabled selected>{t('contact.form.service.option.default')}</option>
-              <option>{t('contact.form.service.option.frontend')}</option>
-              <option>{t('contact.form.service.option.hosting')}</option>
-              <option>{t('contact.form.service.option.pack')}</option>
+              <option disabled selected>{m.contact_form_service_option_default({}, opt)}</option>
+              <option>{m.contact_form_service_option_frontend({}, opt)}</option>
+              <option>{m.contact_form_service_option_hosting({}, opt)}</option>
+              <option>{m.contact_form_service_option_pack({}, opt)}</option>
             </select>
           </div>
 
           <div class="form-control w-full">
             <label for="mensaje" class="label pb-1">
-              <span class="label-text font-semibold">{t('contact.form.message')}</span>
+              <span class="label-text font-semibold">{m.contact_form_message({}, opt)}</span>
             </label>
             <textarea
               id="mensaje"
               name="mensaje"
               class="textarea textarea-bordered h-32 w-full focus:textarea-primary transition-all"
-              placeholder={t('contact.form.message.placeholder')}
+              placeholder={m.contact_form_message_placeholder({}, opt)}
               required></textarea>
           </div>
 
@@ -220,7 +220,7 @@ const t = useTranslations(currentLang);
               id="submitBtn"
               class="btn btn-primary btn-block text-white"
             >
-              {t('contact.form.submit')}
+              {m.contact_form_submit({}, opt)}
             </button>
           </div>
         </form>

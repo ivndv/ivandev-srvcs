@@ -1,56 +1,46 @@
 ---
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 // Datos
 import { proyectos } from "../data/proyectos";
-// Utilerías
-import { getCloudflareImage } from "../utils/images";
-// i18n
-import { useTranslations } from '../i18n/utils';
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 ---
 
 {/* Sección Proyectos — portafolio destacado */}
 <section id="proyectos" class="py-24 px-4 lg:px-20 bg-base-200">
   <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
     <div class="max-w-xl animate-on-scroll">
-      <h2 class="text-4xl font-bold mb-4 text-base-content">{t('projects.title')}</h2>
+      <h2 class="text-4xl font-bold mb-4 text-base-content">{m.projects_title({}, opt)}</h2>
       <p class="text-lg text-base-content/70">
-        {t('projects.desc')}
+        {m.projects_desc({}, opt)}
       </p>
     </div>
     <a
       href="https://github.com/Ivandv19"
       target="_blank"
       rel="noopener noreferrer"
-      class="btn btn-outline btn-sm">{t('projects.view_git')}</a
+      class="btn btn-outline btn-sm">{m.projects_view_git({}, opt)}</a
     >
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {
       proyectos.map((proyecto) => (
-        <!-- Tarjeta de proyecto -->
         <div class="card bg-base-100 shadow-xl overflow-hidden group animate-on-scroll">
           <figure class="relative aspect-video overflow-hidden bg-base-300">
             <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10" />
 
             {proyecto.img && (
               <img
-                src={getCloudflareImage(proyecto.img, 800)}
-                srcset={`
-        ${getCloudflareImage(proyecto.img, 400)} 400w,
-        ${getCloudflareImage(proyecto.img, 800)} 800w,
-        ${getCloudflareImage(proyecto.img, 1200)} 1200w
-                `}
-                sizes="(max-width: 768px) 95vw, 400px"
+                src={proyecto.img}
                 width="800"
                 height="450"
                 alt={proyecto.titulo}
                 loading="lazy"
                 decoding="async"
                 class="group-hover:scale-110 transition-transform duration-500 object-cover w-full h-full"
-                onerror="this.style.display='none'; console.error('[PROYECTO] Falló imagen:', this.currentSrc)"
               />
             )}
           </figure>
@@ -60,26 +50,30 @@ const t = useTranslations(currentLang);
             <p class="text-sm opacity-70">{proyecto.desc[currentLang] || proyecto.desc.es}</p>
             <div class="card-actions justify-start mt-4">
               {proyecto.tags.map((tag) => (
-                <div class="badge badge-outline text-xs">{tag}</div>
+                <span class="badge badge-outline badge-sm">{tag}</span>
               ))}
             </div>
-            <div class="mt-6 flex justify-between items-center">
-              <a
-                href={proyecto.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-primary font-bold hover:underline text-sm"
-              >
-                {t('projects.demo')}
-              </a>
-              <a 
-                href={proyecto.repo} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="btn btn-ghost btn-xs"
-              >
-                Repo ↗
-              </a>
+            <div class="card-actions justify-end mt-6 gap-2">
+              {proyecto.live && (
+                <a
+                  href={proyecto.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary btn-sm"
+                >
+                  {m.projects_live({}, opt)}
+                </a>
+              )}
+              {proyecto.repo && (
+                <a
+                  href={proyecto.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost btn-sm"
+                >
+                  {m.projects_repo({}, opt)}
+                </a>
+              )}
             </div>
           </div>
         </div>

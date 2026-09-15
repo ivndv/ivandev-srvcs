@@ -1,22 +1,22 @@
 ---
-// i18n
-import { useTranslations } from '../i18n/utils';
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 
-const currentLang = (Astro.currentLocale || 'es') as 'es' | 'en';
-const t = useTranslations(currentLang);
+const currentLang = (Astro.currentLocale || "es") as "es" | "en";
+const opt = { locale: currentLang };
 ---
 
 {/* Sección Sobre Mí — trayectoria y educación */}
 <section id="sobre-mi" class="py-24 px-4 lg:px-20 bg-base-200/50">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start animate-on-scroll">
     <div>
-      <h2 class="text-4xl font-bold mb-6 text-base-content">{t('about.title')}</h2>
+      <h2 class="text-4xl font-bold mb-6 text-base-content">{m.about_title({}, opt)}</h2>
       <div class="prose prose-lg text-base-content/90">
         <p>
-          <span set:html={t('about.p1')} />
+          <span set:html={m.about_p1({}, opt)} />
         </p>
         <p>
-          <span set:html={t('about.p2')} />
+          <span set:html={m.about_p2({}, opt)} />
         </p>
       </div>
 
@@ -24,11 +24,11 @@ const t = useTranslations(currentLang);
       <div class="flex gap-8 mt-10">
         <div>
           <div class="text-3xl font-bold text-primary">+20</div>
-          <div class="text-xs uppercase font-bold text-base-content/70">{t('about.stats.projects')}</div>
+          <div class="text-xs uppercase font-bold text-base-content/70">{m.about_stats_projects({}, opt)}</div>
         </div>
         <div>
           <div class="text-3xl font-bold text-secondary">+2</div>
-          <div class="text-xs uppercase font-bold text-base-content/70">{t('about.stats.exp')}</div>
+          <div class="text-xs uppercase font-bold text-base-content/70">{m.about_stats_exp({}, opt)}</div>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ const t = useTranslations(currentLang);
           ><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path
             d="M6 12v5c3 3 9 3 12 0v-5"></path></svg
         >
-        {t('about.education.title')}
+        {m.about_education_title({}, opt)}
       </h3>
 
       {/* Línea de tiempo de formación */}
@@ -72,11 +72,11 @@ const t = useTranslations(currentLang);
           <div class="timeline-start md:text-end mb-10">
             <time class="font-mono italic opacity-60">Nov 2024 - Dic 2025</time>
             <div class="text-lg font-black text-secondary">
-              {t('about.job1.role')}
+              {m.about_job1_role({}, opt)}
             </div>
 
             <p class="text-sm opacity-70">
-              {t('about.job1.desc')}
+              {m.about_job1_desc({}, opt)}
             </p>
           </div>
           <hr class="bg-primary" />
@@ -99,13 +99,13 @@ const t = useTranslations(currentLang);
           <div class="timeline-end mb-10">
             <time class="font-mono italic opacity-60">Ene 2024 - Oct 2024</time>
             <div class="text-lg font-black font-primary text-primary">
-              {t('about.job2.role')}
+              {m.about_job2_role({}, opt)}
             </div>
             <p class="text-xs font-bold opacity-60 uppercase mb-1">
-              {t('about.job2.company')}
+              {m.about_job2_company({}, opt)}
             </p>
             <p class="text-sm opacity-70">
-              {t('about.job2.desc')}
+              {m.about_job2_desc({}, opt)}
             </p>
           </div>
           <hr class="bg-primary" />
@@ -121,18 +121,18 @@ const t = useTranslations(currentLang);
               class="h-5 w-5 text-primary"
               ><path
                 fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 10-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                 clip-rule="evenodd"></path></svg
             >
           </div>
           <div class="timeline-start md:text-end mb-10">
             <time class="font-mono italic opacity-60">Jun 2017 - Jun 2020</time>
-            <div class="text-lg font-black">{t('about.job3.role')}</div>
+            <div class="text-lg font-black">{m.about_job3_role({}, opt)}</div>
             <p class="text-xs font-bold opacity-60 uppercase mb-1">
-              {t('about.job3.company')}
+              {m.about_job3_company({}, opt)}
             </p>
             <p class="text-sm opacity-70">
-              {t('about.job3.desc')}
+              {m.about_job3_desc({}, opt)}
             </p>
           </div>
         </li>

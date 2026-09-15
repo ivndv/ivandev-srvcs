@@ -42,7 +42,7 @@ const { class: className } = Astro.props;
 </button>
 
 <script>
-  import { preferencesStore } from "../store/preferences";
+  import { preferencesStore } from "../store/store";
 
   // Inicializa los botones de cambio de tema
   function initThemeToggle() {
@@ -60,7 +60,6 @@ const { class: className } = Astro.props;
     });
   }
 
-  // 2. Ejecuta en carga inicial y en navegación con Astro
+  // 2. Ejecuta en carga inicial
   initThemeToggle();
-  document.addEventListener('astro:page-load', initThemeToggle);
 </script>

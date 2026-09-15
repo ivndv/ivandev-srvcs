@@ -1,19 +1,15 @@
 ---
+// Paraglide i18n
+import * as m from "@/paraglide/messages";
 // Layout
 import Layout from "../layouts/Layout.astro";
-// i18n
-import { useTranslations } from "../i18n/utils";
-
-// Muestra siempre el 404 en español
-// El script cliente ajusta a inglés si detecta navegador en inglés
-const t = useTranslations('es');
 ---
 
 {/* Página 404 — no encontrada */}
-<Layout title="404 - Página no encontrada" lang="es">
+<Layout title="404 - Página no encontrada">
   <div class="hero min-h-[80vh] flex items-center justify-center text-center px-4">
     <div class="max-w-md">
-      <!-- Icono animado -->
+      {/* Icono animado */}
       <div class="mb-8 flex justify-center">
         <div class="relative">
           <div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
@@ -38,38 +34,15 @@ const t = useTranslations('es');
 
       <h1 class="text-7xl font-black mb-4">404</h1>
 
-      <h2 id="title404" class="text-2xl font-bold mb-4">{t('404.title')}</h2>
+      <h2 class="text-2xl font-bold mb-4">{m.page_404_title()}</h2>
 
-      <p id="desc404" class="py-6 text-lg opacity-70">
-        {t('404.desc')}
+      <p class="py-6 text-lg opacity-70">
+        {m.page_404_desc()}
       </p>
 
-      <a id="btn404" href="/" class="btn btn-primary text-white btn-wide">
-        {t('404.button')}
+      <a href="/" class="btn btn-primary text-white btn-wide">
+        {m.page_404_button()}
       </a>
     </div>
   </div>
 </Layout>
-
-<script>
-  // 1. Detecta el idioma del usuario (sessionStorage > navegador)
-  // 2. Si es inglés, reemplaza textos del 404 y redirige al home en inglés
-  import { ui } from '../i18n/ui';
-
-  const storedLang = sessionStorage.getItem('preferred_lang');
-  const browserLang = navigator.language?.split('-')[0];
-  const lang = storedLang || browserLang;
-
-  if (lang === 'en') {
-    const title = document.getElementById('title404');
-    const desc = document.getElementById('desc404');
-    const btn = document.getElementById('btn404');
-
-    if (title) title.innerText = ui.en['404.title'];
-    if (desc) desc.innerText = ui.en['404.desc'];
-    if (btn) {
-      btn.innerText = ui.en['404.button'];
-      btn.setAttribute('href', '/en/');
-    }
-  }
-</script>
