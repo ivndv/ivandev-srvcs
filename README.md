@@ -26,33 +26,13 @@ Esta es la página pública y tarjeta de presentación digital enfocada a captar
 ## Tecnologías Utilizadas
 
 - HTML / CSS / TypeScript
-- Astro 5
+- Astro 7
 - Tailwind CSS
 - DaisyUI
 - Hono
-- pnpm
+- Paraglide
+- Bun
 
-## Instalación
-
-1. **Clonar el Repositorio**: Descarga este proyecto comercial directo en tu máquina a través de Git.
-
-```bash
-git clone https://github.com/Ivandv19/portafolio-web-serv-front.git
-```
-
-2. **Instalar Dependencias**: Entra en tu terminal a la carpeta recién copiada y ejecuta:
-
-```bash
-pnpm install
-```
-
-3. **Variables Prácticas**: Necesitarás crear un entorno variables `.env` o `.dev.vars` colocando tus dos llaves de servicios: `RESEND_API_KEY` para poder mandar los correos, y `TURNSTILE_SECRET_KEY` para que el formulario se proteja del código malicioso de internet.
-
-4. **Correr Localmente**: Levanta una sesión con vista en vivo usando el comando:
-
-```bash
-pnpm run dev
-```
 
 ## Créditos
 
@@ -64,12 +44,8 @@ Esta página es la plataforma central comercial del ecosistema.
 
 La plataforma se construye y exporta mediante recursos de red ultrarrápidos y funciona gracias a pequeñas porciones de trabajo en el servidor enlazadas al ecosistema internacional de Cloudflare Pages. 
 
-Puedes revisarlo cuando gustes: [web-portfolio.mgdc.site](https://web-portfolio.mgdc.site/).
+Puedes revisarlo cuando gustes: [Portafolio Web](https://web-portfolio.mgdc.site/).
 
 ## Licencia
 
-Licencia de Uso Personal:
-
-Este software es propiedad de **Ivan Cruz**. Se permite el uso de este software solo para fines personales y no comerciales. No se permite la distribución, modificación ni uso comercial de este software sin el consentimiento expreso de **Ivan Cruz**.
-
-Cualquier uso no autorizado puede resultar en acciones legales.
+[MIT](LICENSE) © 2026 Ivan Cruz
