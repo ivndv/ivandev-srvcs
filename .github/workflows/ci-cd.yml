@@ -21,15 +21,14 @@ permissions:
 
 jobs:
   lint:
+    name: Biome
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - name: Lint
-        run: bun run lint
-      - name: Format check
-        run: bun run check
+      - name: Biome CI
+        run: bunx biome ci .
 
   test:
     runs-on: ubuntu-latest
@@ -53,8 +52,7 @@ jobs:
         env:
           PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_TURNSTILE_SITE_KEY }}
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist/ --project-name=ivandev-srvcs
+        run: bunx wrangler pages deploy dist/ --project-name=ivandev-srvcs --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
