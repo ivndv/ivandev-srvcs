@@ -22,7 +22,7 @@ permissions:
 jobs:
   lint:
     name: Biome
-    runs-on: [self-hosted, linux, arm64]
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -31,7 +31,7 @@ jobs:
         run: bunx biome ci .
 
   test:
-    runs-on: [self-hosted, linux, arm64]
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -42,7 +42,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [lint, test]
-    runs-on: [self-hosted, linux, arm64]
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
