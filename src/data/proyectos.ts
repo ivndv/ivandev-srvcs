@@ -13,7 +13,7 @@ export const proyectos: Project[] = [
 		},
 		img: `${ASSETS_BASE}/fluxbeats.png`,
 		tags: ["React", "Vite", "Tailwindcss", "Node.js", "Cloudflare"],
-		live: "https://landing-page.mgdc.site/",
+		live: "https://fluxbeats.liuma.app/",
 		repo: "https://github.com/Ivandv19/landing-page-1906",
 	},
 
@@ -26,7 +26,7 @@ export const proyectos: Project[] = [
 		},
 		img: `${ASSETS_BASE}/fluxdev.png`,
 		tags: ["Astro", "Cloudflare", "D1 (SQLite)", "TailwindCSS"],
-		live: "https://fluxdev.mgdc.site",
+		live: "https://fluxdev.liuma.app",
 		repo: "https://github.com/Ivandv19/blog-personal-fluxdev",
 	},
 ];

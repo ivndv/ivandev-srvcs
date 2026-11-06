@@ -17,7 +17,7 @@ export function registerDocsController(app: OpenAPIHono<{ Bindings: Env }>) {
 				"API serverless en Cloudflare Pages Functions para el portafolio web de servicios. Incluye endpoints de salud y contacto con protección Turnstile y envío vía Resend.",
 		},
 		servers: [
-			{ url: "https://web-portfolio.mgdc.site", description: "Producción" },
+			{ url: "https://web-portfolio.liuma.app", description: "Producción" },
 			{ url: "http://localhost:4321", description: "Desarrollo Local" },
 		],
 	});

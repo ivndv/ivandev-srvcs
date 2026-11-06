@@ -19,7 +19,7 @@ Esta es la página pública y tarjeta de presentación digital enfocada a captar
 
 ## Uso
 
-- **Visualizar Contenido**: El proyecto web está completamente activo. Puedes explorarlo entrando aquí: [Portafolio Servicios](https://web-portfolio.mgdc.site/).
+- **Visualizar Contenido**: El proyecto web está completamente activo. Puedes explorarlo entrando aquí: [Portafolio Servicios](https://web-portfolio.liuma.app/).
 - **Explorar Ofertas**: Navega descubriendo todo el abanico de servicios y alterna entre inglés/español usando el globo superior para mayor comodidad.
 - **Enviar un Mensaje**: ¿Quieres trabajar conmigo? Simplemente rellena cualquier formulario al final de la lectura e inmediatamente un correo oficial me será despachado.
 
@@ -44,7 +44,7 @@ Esta página es la plataforma central comercial del ecosistema.
 
 La plataforma se construye y exporta mediante recursos de red ultrarrápidos y funciona gracias a pequeñas porciones de trabajo en el servidor enlazadas al ecosistema internacional de Cloudflare Pages. 
 
-Puedes revisarlo cuando gustes: [Portafolio Web](https://web-portfolio.mgdc.site/).
+Puedes revisarlo cuando gustes: [Portafolio Web](https://web-portfolio.liuma.app/).
 
 ## Licencia
 

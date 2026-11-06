@@ -7,7 +7,7 @@ Guía operativa y técnica para agentes de IA que colaboran en el desarrollo, ma
 **ivandev-srvcs** es una plataforma web y portafolio profesional bilingüe (español e inglés) enfocado en la presentación y contratación de servicios de desarrollo de software, landing pages de alta conversión, menús digitales y aplicaciones web a medida para negocios, profesionales y startups.
 
 - **Propósito:** presentar el catálogo de servicios, casos de éxito, testimonios y capturar leads cualificados mediante un formulario de contacto seguro (protegido con honeypot y Cloudflare Turnstile) conectado a Cloudflare Pages Functions y Resend.
-- **Dominio en producción:** [https://web-portfolio.mgdc.site](https://web-portfolio.mgdc.site)
+- **Dominio en producción:** [https://web-portfolio.liuma.app](https://web-portfolio.liuma.app)
 - **Repositorio:** [https://github.com/ivndv/ivandev-srvcs](https://github.com/ivndv/ivandev-srvcs)
 - **Rutas:** `/` sirve el contenido en español (`defaultLocale`) y `/en/` en inglés; `404.astro` cubre los errores.
 

@@ -10,7 +10,7 @@ import { defineConfig } from "astro/config";
 
 // Configuración de Astro — sitio estático multilingüe con Paraglide i18n
 export default defineConfig({
-	site: "https://web-portfolio.mgdc.site",
+	site: "https://web-portfolio.liuma.app",
 	prefetch: true,
 	output: "static",
 
