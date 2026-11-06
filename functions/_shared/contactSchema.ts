@@ -13,7 +13,7 @@ export const contactSchema = z
 				description: "Nombre de la persona interesada",
 			}),
 		email: z.string().email("Email inválido").openapi({
-			example: "contacto@mgdc.site",
+			example: "contacto@ejemplo.com",
 			description: "Correo electrónico del contacto",
 		}),
 		servicio: z

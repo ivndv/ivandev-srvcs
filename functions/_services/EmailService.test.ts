@@ -18,8 +18,8 @@ describe("EmailService", () => {
 	let service: EmailService;
 	const mockEnv: Env = {
 		RESEND_API_KEY: "re_mock_key",
-		FROM_EMAIL: "noreply@mgdc.site",
-		TO_EMAIL: "admin@mgdc.site",
+		FROM_EMAIL: "Web Portfolio <noreply@liuma.app>",
+		TO_EMAIL: "ivangtx19@proton.me",
 		TURNSTILE_SECRET_KEY: "0x4AAA",
 	};
 
