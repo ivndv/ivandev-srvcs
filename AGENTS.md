@@ -1,34 +1,25 @@
-# AGENTS.md — Guía para Agentes en ivandev-srvcs
+# AGENTS.md — ivandev-srvcs
 
-Guía operativa y técnica para agentes de Inteligencia Artificial que colaboren en el desarrollo, mantenimiento y optimización del proyecto **ivandev-srvcs**.
+Guía operativa y técnica para agentes de IA que colaboran en el desarrollo, mantenimiento y optimización del proyecto.
 
----
-
-## 1. Visión General del Proyecto
+## 1. Visión general
 
 **ivandev-srvcs** es una plataforma web y portafolio profesional bilingüe (español e inglés) enfocado en la presentación y contratación de servicios de desarrollo de software, landing pages de alta conversión, menús digitales y aplicaciones web a medida para negocios, profesionales y startups.
 
-* **Propósito:** Presentar el catálogo de servicios, casos de éxito, testimonios y capturar leads cualificados mediante un formulario de contacto seguro (protegido con honeypot y Cloudflare Turnstile) conectado a Cloudflare Pages Functions y Resend.
-* **Dominio en Producción:** [https://web-portfolio.mgdc.site](https://web-portfolio.mgdc.site)
-* **Repositorio:** [https://github.com/ivndv/ivandev-srvcs](https://github.com/ivndv/ivandev-srvcs)
+- **Propósito:** presentar el catálogo de servicios, casos de éxito, testimonios y capturar leads cualificados mediante un formulario de contacto seguro (protegido con honeypot y Cloudflare Turnstile) conectado a Cloudflare Pages Functions y Resend.
+- **Dominio en producción:** [https://web-portfolio.mgdc.site](https://web-portfolio.mgdc.site)
+- **Repositorio:** [https://github.com/ivndv/ivandev-srvcs](https://github.com/ivndv/ivandev-srvcs)
+- **Rutas:** `/` sirve el contenido en español (`defaultLocale`) y `/en/` en inglés; `404.astro` cubre los errores.
 
----
+## 2. Antes de tocar código
 
-## 2. Antes de Tocar Código (CodeGraph)
+**CodeGraph** (índice de símbolos del repo): usa `codegraph_explore` (`query`, `maxFiles`, `projectPath`) antes de un grep masivo o de leer varios archivos; devuelve fuente verbatim, rutas de llamada e impacto.
 
-* **Uso del MCP CodeGraph:** Antes de realizar búsquedas a ciegas o modificar múltiples archivos, utiliza la herramienta `codegraph_explore` para inspeccionar la arquitectura, dependencias y relaciones entre símbolos de forma precisa.
-* **Comandos de Mantenimiento de CodeGraph:**
-  ```bash
-  # Verificar estado del índice de código
-  codegraph status /home/ivan/software-dev/ivandev-srvcs
+- `codegraph sync /home/ivan/software-dev/ivandev-srvcs` tras editar, pull o cambiar de rama (incremental, uso normal).
+- `codegraph index /home/ivan/software-dev/ivandev-srvcs` solo al crear el índice, tras `codegraph upgrade` o si `status` avisa `built by vX` (rebuild completo).
+- `codegraph status /home/ivan/software-dev/ivandev-srvcs` para comprobar el estado.
 
-  # Sincronizar cambios en el árbol de archivos
-  codegraph sync /home/ivan/software-dev/ivandev-srvcs
-  ```
-
----
-
-## 3. Stack Tecnológico
+## 3. Stack tecnológico
 
 | Capa | Tecnología | Versión / Detalle |
 | :--- | :--- | :--- |
@@ -37,22 +28,20 @@ Guía operativa y técnica para agentes de Inteligencia Artificial que colaboren
 | **Frontend & SSG** | **Astro 7** | `astro ^7.3.2`, `@astrojs/sitemap ^3.7.4` |
 | **Estilos & UI** | **Tailwind CSS 4** + **DaisyUI 5** | `@tailwindcss/vite ^4.3.3`, `daisyui ^5.7.38`, `@iconify/tailwind4 ^1.2.3` |
 | **Fuentes** | **Fontsource Outfit** | `@fontsource/outfit ^5.3.0` |
-| **Estado Global** | **Zustand 5** | `zustand ^5.0.15` (idioma y preferencias de tema) |
+| **Estado global** | **Zustand 5** | `zustand ^5.0.15` (idioma y preferencias de tema) |
 | **Backend / Edge API** | **Hono 4** en Cloudflare Pages Functions | `hono ^4.13.8` en `functions/api/[[route]].ts` |
-| **Servicio de Email** | **Resend SDK** | `resend ^6.28.1` (notificación de leads a bandeja administrativa) |
-| **Seguridad & Anti-Bot** | **Cloudflare Turnstile** + Honeypot | Verificación de tokens captcha del lado del servidor |
-| **Validación de Esquemas** | **Zod 4** | `zod ^4.6.5` |
-| **Analítica Web** | **Umami Analytics** | Script ligero sin cookies integrado en `Layout.astro` |
+| **Servicio de email** | **Resend SDK** | `resend ^6.28.1` (notificación de leads a bandeja administrativa) |
+| **Seguridad & anti-bot** | **Cloudflare Turnstile** + Honeypot | Verificación de tokens captcha del lado del servidor |
+| **Validación de esquemas** | **Zod 4** | `zod ^4.6.5` |
+| **Analítica web** | **Umami Analytics** | Script ligero sin cookies integrado en `Layout.astro` |
 | **Linter & Formatter** | **Biome 2** | `@biomejs/biome ^2.5.13` (`biome.json`) |
-| **Pruebas Unitarias** | **Vitest 5** + **JSDOM** | `vitest ^5.0.1`, `jsdom ^30.0.1`, `@testing-library/jest-dom ^7.0.1` |
-| **Infraestructura Cloud** | **Cloudflare Pages** | `wrangler ^4.132.0` (`wrangler.json`, `nodejs_compat`) |
+| **Pruebas unitarias** | **Vitest 5** + **JSDOM** | `vitest ^5.0.1`, `jsdom ^30.0.1`, `@testing-library/jest-dom ^7.0.1` |
+| **Infraestructura cloud** | **Cloudflare Pages** | `wrangler ^4.132.0` (`wrangler.json`, `nodejs_compat`) |
 | **CI/CD** | **GitHub Actions** | Composite Action `.github/actions/setup`, Node 24 nativo |
 
----
+## 4. Estructura del código
 
-## 4. Estructura del Código
-
-```
+```plaintext
 ivandev-srvcs/
 ├── functions/                              → Backend Edge Serverless (Cloudflare Pages Functions)
 │   ├── _controllers/                       → Controladores HTTP con registro y OpenAPI
@@ -126,9 +115,50 @@ ivandev-srvcs/
 └── wrangler.json                           → Configuración de despliegue en Cloudflare Pages
 ```
 
----
+## 5. Arquitectura y flujo de datos
 
-## 5. Comandos de Desarrollo y Tooling
+### 5.1 Backend desacoplado con inyección de dependencias
+
+Todo el backend en `functions/` sigue principios SOLID:
+
+- `IEmailService`: contrato abstracto para envío de correos (implementado por `ResendEmailService`).
+- `IVerificationService`: contrato abstracto para validación anti-bot (implementado por `TurnstileVerificationService`).
+- `ContactService`: orquestador que recibe las dependencias en su constructor (`new ContactService(emailService, verificationService)`), lo que permite tests unitarios con mocks sin tocar APIs externas.
+
+### 5.2 Seguridad del formulario de contacto
+
+El endpoint `POST /api/send-email` ejecuta cuatro barreras:
+
+1. **Honeypot:** campo oculto `_gotcha`. Si contiene algún valor, se simula éxito inmediato devolviendo 200 OK para neutralizar bots simples sin consumir recursos de red.
+2. **Validación Zod:** los esquemas de `functions/_shared/contactSchema.ts` validan nombres, emails con formato válido, longitud de mensaje y presencia del token `cf-turnstile-response`.
+3. **Turnstile Siteverify:** llamada directa a `https://challenges.cloudflare.com/turnstile/v0/siteverify` con el secreto `TURNSTILE_SECRET_KEY` y la IP remota del cliente (`CF-Connecting-IP`).
+4. **Resend Email:** envío de correo administrativo formateado con HTML responsive.
+
+Complementan el flujo el `RateLimiter` por IP y el manejo uniforme de errores 404/500 en JSON de `_middleware/errors.ts`.
+
+### 5.3 Optimización de imágenes con Cloudflare
+
+El helper `getCloudflareImage` en `src/utils/images.ts` normaliza y genera URLs responsivas (`srcset` con 400w, 800w, 1200w) para consumir el optimizador de imágenes al vuelo de Cloudflare (`/cdn-cgi/image/format=auto,width=...`).
+
+### 5.4 Internacionalización con Paraglide JS
+
+- **Paraglide JS** (`@inlang/paraglide-js`) se integra en Vite vía `paraglideVitePlugin` en `astro.config.mjs`.
+- Los mensajes se definen en `messages/es.json` (idioma origen) y `messages/en.json`.
+- Las funciones de traducción tipadas y tree-shakeable se importan desde `@/paraglide/messages` (`import * as m from "@/paraglide/messages"`).
+- La ruta `/` sirve español (`defaultLocale`) y `/en/` sirve inglés.
+
+## 6. Variables de entorno
+
+Definidas como bindings de Cloudflare Pages Functions (`Env` en `functions/_shared/types.ts`):
+
+| Variable | Descripción |
+| :--- | :--- |
+| `RESEND_API_KEY` | Clave de API de Resend para el envío de correos. |
+| `FROM_EMAIL` | Dirección remitente del correo administrativo. |
+| `TO_EMAIL` | Bandeja administrativa que recibe los leads. |
+| `TURNSTILE_SECRET_KEY` | Secreto para verificar tokens de Cloudflare Turnstile. |
+
+## 7. Comandos
 
 Todos los comandos deben ejecutarse con **Bun**:
 
@@ -155,40 +185,25 @@ bun run format
 bun run test
 ```
 
----
+## 8. Convenciones y reglas críticas
 
-## 6. Arquitectura y Reglas de Negocio
+- **Gestor de paquetes:** usa siempre **Bun**; no ejecutes `npm`, `yarn` ni `pnpm`.
+- **Código generado:** `src/paraglide/` se compila automáticamente; no lo edites a mano.
+- **Seguridad fail-closed:** no elimines ni relajes ninguna de las cuatro barreras de `POST /api/send-email` (honeypot, Zod, Turnstile, Resend) ni el `RateLimiter`.
+- **Contratos de backend:** cualquier servicio nuevo debe depender de las interfaces (`IEmailService`, `IVerificationService`) y recibirse por constructor, no instanciarse dentro del orquestador.
+- **i18n:** `messages/es.json` es el idioma origen; toda clave nueva debe existir también en `messages/en.json` y consumirse vía `m.*`.
+- **Calidad:** el código debe pasar `bun run check`, `bun run test` y `bun run build` antes de fusionar.
 
-### 6.1. Backend Desacoplado con Inyección de Dependencias
-* Todo el backend en `functions/` está estructurado siguiendo principios SOLID:
-  - `IEmailService`: Contrato abstracto para envío de correos (implementado por `ResendEmailService`).
-  - `IVerificationService`: Contrato abstracto para validación anti-bot (implementado por `TurnstileVerificationService`).
-  - `ContactService`: Orquestador que recibe las dependencias en su constructor (`new ContactService(emailService, verificationService)`), permitiendo tests unitarios con mocks sin tocar APIs externas.
+## 9. Flujo de Git y despliegue
 
-### 6.2. Seguridad del Formulario de Contacto
-El flujo del endpoint `POST /api/send-email` ejecuta 4 barreras de seguridad:
-1. **Honeypot:** Campo oculto `_gotcha`. Si contiene algún valor, se simula éxito inmediato devolviendo 200 OK para neutralizar bots simples sin consumir recursos de red.
-2. **Validación Zod:** `contact.validator.ts` valida nombres, emails con formato válido, longitud de mensaje y presencia del token `cf-turnstile-response`.
-3. **Turnstile Siteverify:** Llamada directa a `https://challenges.cloudflare.com/turnstile/v0/siteverify` con el secreto `TURNSTILE_SECRET_KEY` y la IP remota del cliente (`CF-Connecting-IP`).
-4. **Resend Email:** Envío de correo administrativo formateado con HTML responsive.
+- **Prohibido realizar commits o push sin la confirmación y aprobación explícita del usuario.**
+- **Ramas:**
+  - `develop`: rama de integración activa. Todos los cambios se commitean y prueban aquí primero.
+  - `main`: rama de producción. Solo se fusiona desde `develop` cuando `bun run check`, `bun run test` y `bun run build` pasan al 100 %, y con aprobación explícita.
+- **Mensajes de commit:** Conventional Commits en minúsculas y español (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`, `refactor: ...`).
 
-### 6.3. Optimización de Imágenes con Cloudflare
-* El helper `getCloudflareImage` en `src/utils/images.ts` normaliza y genera URLs responsivas (`srcset` con 400w, 800w, 1200w) para consumir el optimizador de imágenes al vuelo de Cloudflare (`/cdn-cgi/image/format=auto,width=...`).
+## 10. CI/CD
 
-### 6.4. Internacionalización (i18n) con Paraglide JS
-* La internacionalización utiliza **Paraglide JS** (`@inlang/paraglide-js`), integrado en Vite vía `paraglideVitePlugin` en `astro.config.mjs`.
-* Los mensajes de traducción se definen en [`messages/es.json`](file:///home/ivan/software-dev/ivandev-srvcs/messages/es.json) (idioma origen) y [`messages/en.json`](file:///home/ivan/software-dev/ivandev-srvcs/messages/en.json).
-* Las funciones de traducción fuertemente tipadas y tree-shakeable se importan desde `@/paraglide/messages` (`import * as m from "@/paraglide/messages"`).
-* La ruta `/` sirve el contenido en **Español** (`defaultLocale`).
-* La ruta `/en/` sirve el contenido en **Inglés**.
-
----
-
-## 7. Protocolo de Git y Despliegue
-
-* **Ramas Principales:**
-  - `develop`: Rama de integración activa. Todos los cambios deben commitearse y probarse aquí primero.
-  - `main`: Rama de producción. Solo se fusiona desde `develop` cuando `bun run check`, `bun run test` y `bun run build` pasen 100% en verde.
-* **Pipeline de CI/CD:**
-  - Pushes a `develop` o `main`: Ejecutan en paralelo `lint` y `test`.
-  - Pushes a `main`: Al pasar `lint` y `test`, disparan el despliegue automático a Cloudflare Pages mediante `cloudflare/wrangler-action@v4`.
+- Pushes a `develop` o `main` ejecutan en paralelo `lint` y `test`.
+- Pushes a `main`: al pasar `lint` y `test`, se dispara el despliegue automático a Cloudflare Pages mediante `cloudflare/wrangler-action@v4`.
+- El setup usa la Composite Action `.github/actions/setup` (Node 24, Bun 1.3.14, caché de `bun.lock`).
